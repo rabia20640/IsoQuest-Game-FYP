@@ -1,0 +1,11 @@
+#target {
+    width: 45%;
+    height: 400px;
+    float: left;
+}
+
+#user {
+    width: 45%;
+    height: 400px;
+    float: right;
+}

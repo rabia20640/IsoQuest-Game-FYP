@@ -1,0 +1,20 @@
+{
+  "targetGraph": {
+    "elements": [
+      {"data": { "id": "a", "colour": "#E63946" } },
+      {"data": { "id": "b", "colour": "#457B9D"} },
+      {"data": { "id": "c", "colour": "#2A9D8F"} },
+      {"data": { "id": "ab", "source": "a", "target": "b" } },
+      {"data": { "id": "bc", "source": "b", "target": "c" } }
+    ]
+  },
+  "blankGraph": {
+    "elements": [
+      {"data": {"id": "a"} },
+      {"data": {"id": "b"} },
+      {"data": {"id": "c"} },
+      {"data": {"id": "ab", "source": "a", "target": "b"} },
+      {"data": {"id": "bc", "source": "b", "target": "c"} }
+    ]
+  }
+  }
