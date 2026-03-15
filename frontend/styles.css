@@ -1,11 +1,13 @@
-#target {
+#target-graph {
     width: 45%;
     height: 400px;
     float: left;
+    border: 2px solid black;
 }
 
-#user {
+#blank-graph {
     width: 45%;
     height: 400px;
     float: right;
+    border: 2px solid black;
 }

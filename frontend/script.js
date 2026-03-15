@@ -1,5 +1,5 @@
 // Path to my level file for the current level
-const levelPath = '/static/graphs/level1.json';
+const levelPath = '../backend/static/graphs/level1.json';
 
 // Fetch and load the level configuration
 fetch(levelPath)
@@ -55,7 +55,18 @@ fetch(levelPath)
         ],
         layout: {name: 'grid'}
     });
+    // Colors the user can cycle through
+    const userColours = ['#ff0000', '#00aaff', '#00cc99', '#ffcc00', '#ffffff'];
+    let colourIndex = 0;
 
+    // When the user clicks a node, change it's color
+    blankCy.on('tap', 'node', function(evt) {
+        const node = evt.target;
+
+        // Cycle to the next color
+        colourIndex = (colourIndex + 1) % userColours.length;
+        node.style('background-color', userColours[colourIndex]);
+        });
 })
     .catch(err => console.error('Error loading level:', err));
 
