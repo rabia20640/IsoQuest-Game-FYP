@@ -55,18 +55,33 @@ fetch(levelPath)
         ],
         layout: {name: 'grid'}
     });
-    // Colors the user can cycle through
-    const userColours = ['#ff0000', '#00aaff', '#00cc99', '#ffcc00', '#ffffff'];
-    let colourIndex = 0;
 
-    // When the user clicks a node, change it's color
+    // --- Colour palette logic ---
+    let selectedColour = null;
+
+    // When a palette colour is clicked
+    document.querySelectorAll('.colour-option').forEach(option => {
+        option.addEventListener('click', () => {
+
+            // Remove highlight from all
+            document.querySelectorAll('.colour-option').forEach(o => o.classList.remove('selected'));
+
+            // Highlight selected
+            option.classList.add('selected');
+
+            // Store selected colour
+            selectedColour = option.getAttribute('data-colour');
+        });
+    });
+
+    // When a node is clicked, apply the selected colour
     blankCy.on('tap', 'node', function(evt) {
         const node = evt.target;
 
-        // Cycle to the next color
-        colourIndex = (colourIndex + 1) % userColours.length;
-        node.style('background-color', userColours[colourIndex]);
-        });
+        if (selectedColour) {
+            node.style('background-color', selectedColour);
+        }
+    });
 })
     .catch(err => console.error('Error loading level:', err));
 

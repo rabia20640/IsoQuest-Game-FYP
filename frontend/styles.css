@@ -11,3 +11,22 @@
     float: right;
     border: 2px solid black;
 }
+
+#colour-palette {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.colour-option {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.colour-option.selected {
+    border: 2px solid black;
+}
