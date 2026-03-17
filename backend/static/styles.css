@@ -1,0 +1,65 @@
+#target-graph {
+    width: 45%;
+    height: 400px;
+    float: left;
+    border: 2px solid black;
+}
+
+#blank-graph {
+    width: 45%;
+    height: 400px;
+    float: right;
+    border: 2px solid black;
+}
+
+#colour-palette {
+    margin: 60px auto 0 auto;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.colour-option {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.colour-option:hover {
+    transform: scale(1.15);
+}
+.colour-option.selected {
+    border: 2px solid black;
+}
+
+#check-answer-btn {
+    margin: 30px auto 0 auto;
+    display: block;
+    padding: 12px 25px;
+    font-size: 18px;
+    background: #45789D;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#check-answer-btn:hover {
+    background: #1D3557;
+}
+
+#feedback {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}

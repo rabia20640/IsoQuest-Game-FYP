@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>IsoQuest</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
 <h1>IsoQuest</h1>
@@ -14,14 +14,16 @@
 
 <div id="colour-palette">
     <p>Select a colour:</p>
-    <div class="colour-option" data-colour="#ff0000" style="background:#ff0000;"></div>
-    <div class="colour-option" data-colour="#00aaff" style="background:#00aaff;"></div>
-    <div class="colour-option" data-colour="#00cc99" style="background:#00cc99;"></div>
-    <div class="colour-option" data-colour="#ffcc00" style="background:#ffcc00;"></div>
+    <div class="colour-option" data-colour="#E63946" style="background:#E63946;"></div>
+    <div class="colour-option" data-colour="#45789D" style="background:#457B9D;"></div>
+    <div class="colour-option" data-colour="#2A9D8F" style="background:#2A9D8F;"></div>
     <div class="colour-option" data-colour="#ffffff" style="background:#ffffff; border:1px solid #000;"></div>
 </div>
 
+<button id="check-answer-btn">Check Answer</button>
+<p id="feedback"></p>
+
 <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
-    <script src="script.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>

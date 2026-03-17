@@ -1,5 +1,5 @@
 // Path to my level file for the current level
-const levelPath = '../backend/static/graphs/level1.json';
+const levelPath = '/static/graphs/level1.json';
 
 // Fetch and load the level configuration
 fetch(levelPath)
@@ -75,15 +75,44 @@ fetch(levelPath)
     });
 
     // When a node is clicked, apply the selected colour
-    blankCy.on('tap', 'node', function(evt) {
+    blankCy.on('tap', 'node', function (evt) {
         const node = evt.target;
 
         if (selectedColour) {
             node.style('background-color', selectedColour);
         }
     });
-})
-    .catch(err => console.error('Error loading level:', err));
+    document.getElementById('check-answer-btn').addEventListener('click', () => {
+        // Extract the user's graph from cytoscape
+        const userGraph = blankCy.json().elements;
+
+        // send to flask
+        fetch('/check_answer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({userGraph: userGraph})
+        })
+            .then(response => response.json())
+            .then(data => {
+                const feedback = document.getElementById('feedback');
+
+                if (data.correct) {
+                    feedback.textContent = "Correct";
+                    feedback.style.color = "green";
+                } else {
+                    feedback.textContent = "Incorrect - try again.";
+                    feedback.style.color = "red";
+                }
+            })
+            .catch(err => console.error('Error checking answer:', err));
+    });
+});
+
+
+
+
 
 
 
