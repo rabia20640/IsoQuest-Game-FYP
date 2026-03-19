@@ -1,5 +1,8 @@
 from flask import Flask, jsonify, request, render_template
 from algorithm import run_all_rules
+from utils import graphs_match
+import json
+import os
 
 app = Flask(__name__, template_folder="../frontend")
 @app.route("/")
@@ -20,9 +23,16 @@ def check_match():
 def check_answer():
     data = request.get_json()
     user_graph = data.get('userGraph')
-    result = {
-        "correct": False
-    }
-    return jsonify(result)
+
+    #Load target graph from JSON
+    level_path = os.path.join("static", "graphs", "level1.json")
+    with open(level_path) as f:
+        level_data = json.load(f)
+    target_graph = level_data["targetGraph"]["elements"]
+
+    # Compare
+    correct = graphs_match(target_graph, user_graph)
+    return jsonify({"correct": correct})
+
 if __name__ == '__main__':
     app.run(debug=True)

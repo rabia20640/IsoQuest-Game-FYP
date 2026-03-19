@@ -59,7 +59,7 @@ fetch(levelPath)
     // --- Colour palette logic ---
     let selectedColour = null;
 
-    // When a palette colour is clicked
+    // When a palette color is clicked
     document.querySelectorAll('.colour-option').forEach(option => {
         option.addEventListener('click', () => {
 
@@ -74,17 +74,18 @@ fetch(levelPath)
         });
     });
 
-    // When a node is clicked, apply the selected colour
+    // When a node is clicked, apply the selected color
     blankCy.on('tap', 'node', function (evt) {
         const node = evt.target;
 
         if (selectedColour) {
             node.style('background-color', selectedColour);
+            node.data('colour', selectedColour);
         }
     });
     document.getElementById('check-answer-btn').addEventListener('click', () => {
         // Extract the user's graph from cytoscape
-        const userGraph = blankCy.json().elements;
+        const userGraph = blankCy.elements().map(el => el.json());
 
         // send to flask
         fetch('/check_answer', {
