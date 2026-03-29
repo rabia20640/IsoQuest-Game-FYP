@@ -23,9 +23,10 @@ def check_match():
 def check_answer():
     data = request.get_json()
     user_graph = data.get('userGraph')
+    level = data.get("level")
 
     #Load target graph from JSON
-    level_path = os.path.join("static", "graphs", "level1.json")
+    level_path = os.path.join("static", "graphs", f"level{level}.json")
     with open(level_path) as f:
         level_data = json.load(f)
     target_graph = level_data["targetGraph"]["elements"]

@@ -1,10 +1,11 @@
+import itertools
+
 def parse_graph(cy_elements):
     nodes = {}
     adjacency = {}
 
     # First pass: collect nodes and colors
     for el in cy_elements:
-        # Node elements have "id" but no "source"
         if el["data"].get("id") and not el["data"].get("source"):
             node_id = el["data"]["id"]
             colour = el["data"].get("colour", "#ffffff")
@@ -26,24 +27,45 @@ def graphs_match(target, user):
     target_nodes, target_adj = parse_graph(target)
     user_nodes, user_adj = parse_graph(user)
 
-    # 1. Node count
+    # Node count must match
     if len(target_nodes) != len(user_nodes):
         return False
 
-    # 2. Colour check
-    for node in target_nodes:
-        if target_nodes[node] != user_nodes.get(node):
-            return False
+    target_ids = list(target_nodes.keys())
+    user_ids = list(user_nodes.keys())
 
-    # 3. Degree check
-    for node in target_adj:
-        if len(target_adj[node]) != len(user_adj.get(node, [])):
-            return False
+    # Try every possible mapping from target → user
+    for perm in itertools.permutations(user_ids):
+        mapping = dict(zip(target_ids, perm))
 
-    # 4. Adjacency check
-    for node in target_adj:
-        if target_adj[node] != user_adj.get(node, set()):
-            return False
+        # 1. Color check under mapping
+        colours_ok = all(
+            target_nodes[t].lower() == user_nodes[mapping[t]].lower()
+            for t in target_ids
+        )
+        if not colours_ok:
+            continue
 
-    return True
+        # 2. Degree check under mapping
+        degrees_ok = all(
+            len(target_adj[t]) == len(user_adj[mapping[t]])
+            for t in target_ids
+        )
+        if not degrees_ok:
+            continue
+
+        # 3. Adjacency check under mapping
+        adjacency_ok = True
+        for t in target_ids:
+            mapped_neighbours = {mapping[n] for n in target_adj[t]}
+            if mapped_neighbours != user_adj[mapping[t]]:
+                adjacency_ok = False
+                break
+
+        if adjacency_ok:
+            return True
+
+    return False
+
+
 

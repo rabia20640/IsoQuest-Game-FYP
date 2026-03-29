@@ -45,7 +45,7 @@ function loadLevel(level) {
                         }
                     }
                 ],
-                layout: {name: 'grid'}
+                layout: {name: 'preset'}
             });
 
             // -- Blank graph (right side) --
@@ -71,7 +71,7 @@ function loadLevel(level) {
                         }
                     }
                 ],
-                layout: {name: 'grid'}
+                layout: {name: 'preset'}
             });
 
 
@@ -111,7 +111,10 @@ function loadLevel(level) {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({userGraph: userGraph})
+                    body: JSON.stringify({
+                        userGraph: userGraph,
+                        level: currentLevel
+                    })
                 })
                     .then(response => response.json())
                     .then(data => {

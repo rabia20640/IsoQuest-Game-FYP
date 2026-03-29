@@ -1,0 +1,28 @@
+{
+  "targetGraph": {
+    "elements": [
+      {"data": {"id": "a", "colour": "#FF0000" }, "position": {"x": 100, "y": 100 } },
+      {"data": {"id": "b", "colour": "#0000FF" }, "position": {"x": 200, "y": 100} },
+      {"data": {"id": "c", "colour": "#00B3B3" }, "position": {"x": 200, "y": 200} },
+      {"data": {"id": "d", "colour": "#FFD700" }, "position": {"x": 100, "y": 200} },
+      {"data": {"source": "a", "target": "b" } },
+      {"data": {"source": "b", "target": "c" } },
+      {"data": {"source": "c", "target": "d" } },
+      {"data": {"source": "d", "target": "a" } }
+]
+  },
+
+  "blankGraph": {
+    "elements": [
+      {"data": { "id": "a"}, "position": {"x": 100, "y":  100 } },
+      {"data": { "id": "b"}, "position": {"x": 200, "y": 100 } },
+      {"data": { "id": "c"}, "position": {"x": 200, "y": 200 } },
+      {"data": { "id": "d"}, "position": {"x": 100, "y": 200 } },
+      {"data": {"source": "a", "target": "b" } },
+      {"data": {"source": "b", "target": "c" } },
+      {"data": {"source": "c", "target": "d" } },
+      {"data": {"source": "d", "target": "a" } }
+    ]
+  }
+}
+
