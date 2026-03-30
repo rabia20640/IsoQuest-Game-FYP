@@ -27,6 +27,11 @@ def graphs_match(target, user):
     target_nodes, target_adj = parse_graph(target)
     user_nodes, user_adj = parse_graph(user)
 
+    print("TARGET NODES:", target_nodes)
+    print("USER NODES:", user_nodes)
+    print("TARGET ADJ:", target_adj)
+    print("USER ADJ:", user_adj)
+
     # Node count must match
     if len(target_nodes) != len(user_nodes):
         return False
@@ -66,6 +71,8 @@ def graphs_match(target, user):
             return True
 
     return False
+
+
 
 
 
