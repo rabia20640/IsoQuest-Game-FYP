@@ -1,5 +1,6 @@
 import itertools
 
+
 def parse_graph(cy_elements):
     nodes = {}
     adjacency = {}
@@ -27,14 +28,9 @@ def graphs_match(target, user):
     target_nodes, target_adj = parse_graph(target)
     user_nodes, user_adj = parse_graph(user)
 
-    print("TARGET NODES:", target_nodes)
-    print("USER NODES:", user_nodes)
-    print("TARGET ADJ:", target_adj)
-    print("USER ADJ:", user_adj)
-
     # Node count must match
     if len(target_nodes) != len(user_nodes):
-        return False
+        return False, None
 
     target_ids = list(target_nodes.keys())
     user_ids = list(user_nodes.keys())
@@ -68,11 +64,6 @@ def graphs_match(target, user):
                 break
 
         if adjacency_ok:
-            return True
+            return True, mapping
 
-    return False
-
-
-
-
-
+    return False, None

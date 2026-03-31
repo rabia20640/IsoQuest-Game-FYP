@@ -1,20 +1,96 @@
 {
   "targetGraph": {
     "elements": [
-      {"data": { "id": "a", "colour": "#E63946" }, "position": { "x": 100, "y": 150 } },
-      {"data": { "id": "b", "colour": "#457B9D"}, "position": { "x": 200, "y": 150 } },
-      {"data": { "id": "c", "colour": "#2A9D8F"}, "position": { "x": 300, "y": 150 } },
-      {"data": { "id": "ab", "source": "a", "target": "b" } },
-      {"data": { "id": "bc", "source": "b", "target": "c" } }
+      {
+        "data": {
+          "id": "a",
+          "colour": "#E63946"
+        },
+        "position": {
+          "x": 100,
+          "y": 150
+        }
+      },
+      {
+        "data": {
+          "id": "b",
+          "colour": "#457B9D"
+        },
+        "position": {
+          "x": 200,
+          "y": 150
+        }
+      },
+      {
+        "data": {
+          "id": "c",
+          "colour": "#2A9D8F"
+        },
+        "position": {
+          "x": 300,
+          "y": 150
+        }
+      },
+      {
+        "data": {
+          "id": "ab",
+          "source": "a",
+          "target": "b"
+        }
+      },
+      {
+        "data": {
+          "id": "bc",
+          "source": "b",
+          "target": "c"
+        }
+      }
     ]
   },
+
   "blankGraph": {
     "elements": [
-      {"data": {"id": "a"}, "position": {"x": 100, "y": 150 } },
-      {"data": {"id": "b"}, "position": {"x": 200, "y": 150 } },
-      {"data": {"id": "c"}, "position": {"x": 300, "y": 150 } },
-      {"data": {"id": "ab", "source": "a", "target": "b"} },
-      {"data": {"id": "bc", "source": "b", "target": "c"} }
+      {
+        "data": {
+          "id": "a"
+        },
+        "position": {
+          "x": 100,
+          "y": 150
+        }
+      },
+      {
+        "data": {
+          "id": "b"
+        },
+        "position": {
+          "x": 200,
+          "y": 150
+        }
+      },
+      {
+        "data": {
+          "id": "c"
+        },
+        "position": {
+          "x": 300,
+          "y": 150
+        }
+      },
+      {
+        "data": {
+          "id": "ab",
+          "source": "a",
+          "target": "b"
+        }
+      },
+      {
+        "data": {
+          "id": "bc",
+          "source": "b",
+          "target": "c"
+        }
+      }
     ]
   }
-  }
+}

@@ -1,4 +1,5 @@
 let currentLevel = 1;
+let lastMapping = null;
 // Next level button handler
 document.getElementById('next-level-btn').addEventListener('click', () => {
     currentLevel++;
@@ -7,6 +8,16 @@ document.getElementById('next-level-btn').addEventListener('click', () => {
     document.getElementById('next-level-btn').disabled = true;
     // Clear feedback
     document.getElementById('feedback').textContent = "";
+});
+
+// Show mapping button handler
+document.getElementById('show-mapping-btn').addEventListener('click', () => {
+    if (!lastMapping) return;
+    let text = "Isomorphism Mapping:\n\n";
+    for (const [target, user] of Object.entries(lastMapping)) {
+        text += `${target} → ${user}\n`;
+    }
+    alert(text);
 });
 
 // Load level function
@@ -19,6 +30,10 @@ function loadLevel(level) {
             // Reset UI
             document.getElementById('feedback').textContent = "";
             document.getElementById('next-level-btn').disabled = true;
+
+            // Reset mapping button + stored mapping
+            document.getElementById('show-mapping-btn').style.display = "none";
+            lastMapping = null;
 
             // Reset palette
             document.querySelectorAll('.colour-option').forEach(o => o.classList.remove('selected'));
@@ -127,9 +142,18 @@ function loadLevel(level) {
                             // Enable next level button
                             document.getElementById('next-level-btn').disabled = false;
 
+                            // Store mapping
+                            lastMapping = data.mapping;
+
+                            // Show the Show Mapping button
+                            document.getElementById('show-mapping-btn').style.display = "inline-block";
+
                         } else {
                             feedback.textContent = "Incorrect - try again.";
                             feedback.style.color = "red";
+
+                            // Hide mapping button if previously shown
+                            document.getElementById('show-mapping-btn').style.display = "none";
                         }
                     })
                     .catch(err => console.error('Error checking answer:', err));

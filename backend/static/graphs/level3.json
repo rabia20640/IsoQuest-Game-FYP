@@ -1,37 +1,197 @@
 {
   "targetGraph": {
     "elements": [
-      { "data": { "id": "a", "colour": "#E63946" }, "position": { "x": 100, "y": 100 } },
-      { "data": { "id": "b", "colour": "#2A9D8F" }, "position": { "x": 200, "y": 100 } },
-      { "data": { "id": "c", "colour": "#E63946" }, "position": { "x": 300, "y": 200 } },
-      { "data": { "id": "d", "colour": "#FFD700" }, "position": { "x": 200, "y": 300 } },
-      { "data": { "id": "e", "colour": "#2A9D8F" }, "position": { "x": 100, "y": 300 } },
-      { "data": { "id": "f", "colour": "#0000FF" }, "position": { "x": 0, "y": 200 } },
-
-      { "data": { "source": "a", "target": "b" } },
-      { "data": { "source": "b", "target": "c" } },
-      { "data": { "source": "c", "target": "d" } },
-      { "data": { "source": "d", "target": "e" } },
-      { "data": { "source": "e", "target": "f" } },
-      { "data": { "source": "f", "target": "a" } }
+      {
+        "data": {
+          "id": "a",
+          "colour": "#E63946"
+        },
+        "position": {
+          "x": 100,
+          "y": 100
+        }
+      },
+      {
+        "data": {
+          "id": "b",
+          "colour": "#2A9D8F"
+        },
+        "position": {
+          "x": 200,
+          "y": 100
+        }
+      },
+      {
+        "data": {
+          "id": "c",
+          "colour": "#E63946"
+        },
+        "position": {
+          "x": 300,
+          "y": 200
+        }
+      },
+      {
+        "data": {
+          "id": "d",
+          "colour": "#FFD700"
+        },
+        "position": {
+          "x": 200,
+          "y": 300
+        }
+      },
+      {
+        "data": {
+          "id": "e",
+          "colour": "#2A9D8F"
+        },
+        "position": {
+          "x": 100,
+          "y": 300
+        }
+      },
+      {
+        "data": {
+          "id": "f",
+          "colour": "#0000FF"
+        },
+        "position": {
+          "x": 0,
+          "y": 200
+        }
+      },
+      {
+        "data": {
+          "source": "a",
+          "target": "b"
+        }
+      },
+      {
+        "data": {
+          "source": "b",
+          "target": "c"
+        }
+      },
+      {
+        "data": {
+          "source": "c",
+          "target": "d"
+        }
+      },
+      {
+        "data": {
+          "source": "d",
+          "target": "e"
+        }
+      },
+      {
+        "data": {
+          "source": "e",
+          "target": "f"
+        }
+      },
+      {
+        "data": {
+          "source": "f",
+          "target": "a"
+        }
+      }
     ]
   },
 
   "blankGraph": {
     "elements": [
-      {"data": { "id": "a" }, "position": { "x": 100, "y": 100 } },
-      {"data": { "id": "b" }, "position": { "x": 200, "y": 100 } },
-      {"data": { "id": "c" }, "position": { "x": 300, "y": 200 } },
-      {"data": { "id": "d" }, "position": { "x": 200, "y": 300 } },
-      {"data": { "id": "e" }, "position": { "x": 100, "y": 300 } },
-      {"data": { "id": "f" }, "position": { "x": 0, "y": 200 } },
-
-       { "data": { "source": "a", "target": "b" } },
-      { "data": { "source": "b", "target": "c" } },
-      { "data": { "source": "c", "target": "d" } },
-      { "data": { "source": "d", "target": "e" } },
-      { "data": { "source": "e", "target": "f" } },
-      { "data": { "source": "f", "target": "a" } }
+      {
+        "data": {
+          "id": "a"
+        },
+        "position": {
+          "x": 100,
+          "y": 100
+        }
+      },
+      {
+        "data": {
+          "id": "b"
+        },
+        "position": {
+          "x": 200,
+          "y": 100
+        }
+      },
+      {
+        "data": {
+          "id": "c"
+        },
+        "position": {
+          "x": 300,
+          "y": 200
+        }
+      },
+      {
+        "data": {
+          "id": "d"
+        },
+        "position": {
+          "x": 200,
+          "y": 300
+        }
+      },
+      {
+        "data": {
+          "id": "e"
+        },
+        "position": {
+          "x": 100,
+          "y": 300
+        }
+      },
+      {
+        "data": {
+          "id": "f"
+        },
+        "position": {
+          "x": 0,
+          "y": 200
+        }
+      },
+      {
+        "data": {
+          "source": "a",
+          "target": "b"
+        }
+      },
+      {
+        "data": {
+          "source": "b",
+          "target": "c"
+        }
+      },
+      {
+        "data": {
+          "source": "c",
+          "target": "d"
+        }
+      },
+      {
+        "data": {
+          "source": "d",
+          "target": "e"
+        }
+      },
+      {
+        "data": {
+          "source": "e",
+          "target": "f"
+        }
+      },
+      {
+        "data": {
+          "source": "f",
+          "target": "a"
+        }
+      }
     ]
   }
 }
