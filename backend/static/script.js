@@ -1,35 +1,49 @@
+// --- IsoQuest: Main client-side Logic ---
+// Handles level loading, color selection, graph interaction,
+// answer checking, mapping display and game completion flow
+
+// Track current level and last completed isomorphism mapping
 let currentLevel = 1;
 let lastMapping = null;
+
+// Restart button: reloads the entire game state
 document.getElementById('restart-btn').addEventListener('click', () => {
     window.location.reload();
 });
-// Next level button handler
+
+// --- Next Level Button ---
+// Advances the game to the next level and resets UI state
 document.getElementById('next-level-btn').addEventListener('click', () => {
     currentLevel++;
     loadLevel(currentLevel);
-    // Disable button again for new level
+
+    // Disable until the new level is solved
     document.getElementById('next-level-btn').disabled = true;
-    // Clear feedback
+
+    // Clear previous feedback
     document.getElementById('feedback').textContent = "";
 });
 
-// Show mapping button handler
+// --- Show Mapping Button ---
+// Displays the isomorphism mapping returned by the backend
 document.getElementById('show-mapping-btn').addEventListener('click', () => {
     if (!lastMapping) return;
+
     let text = "Isomorphism Mapping:\n\n";
     for (const [target, user] of Object.entries(lastMapping)) {
         text += `${target} → ${user}\n`;
     }
+
     document.getElementById('mapping-text').textContent = text;
     document.getElementById('mapping-modal').style.display = "block";
 });
 
-// Close modal
+// --- Modal Close Handlers ---
+// Allows closing via x button or by clicking outside the modal
 document.getElementById('close-modal').addEventListener('click', () => {
     document.getElementById('mapping-modal').style.display = "none";
 });
 
-// Close when clicking outside the modal box
 window.addEventListener('click', (event) => {
     const modal = document.getElementById('mapping-modal');
     if (event.target === modal) {
@@ -37,27 +51,34 @@ window.addEventListener('click', (event) => {
     }
 });
 
-// Load level function
+//--- Load level ---
+// Fetches the JSON file for the given level and initializes:
+// - Target graph (reference)
+// - Blank graph (player workspace)
+// - Color palette interactions
+// - Node coloring behaviour
+
 function loadLevel(level) {
     const levelPath = `/static/graphs/level${level}.json`;
 
     fetch(levelPath)
         .then(response => response.json())
         .then(levelData => {
-            // Reset UI
+
+            // Reset UI state for the new level
             document.getElementById('feedback').textContent = "";
             document.getElementById('next-level-btn').disabled = true;
 
-            // Reset mapping button + stored mapping
+            // Reset mapping button and stored mapping
             document.getElementById('show-mapping-btn').style.display = "none";
             lastMapping = null;
 
-            // Reset palette
+            // Reset palette selection
             document.querySelectorAll('.colour-option').forEach(o => o.classList.remove('selected'));
             let selectedColour = null;
 
             // --- Target graph (left side) ---
-            // This graph displays the completed version of the puzzle
+            // Displays the fully colored reference graph for the level
             const targetCy = cytoscape({
                 container: document.getElementById('target-graph'),
                 elements: levelData.targetGraph.elements, // Nodes + edges from JSON
@@ -106,15 +127,15 @@ function loadLevel(level) {
                 layout: {name: 'preset'}
             });
 
-
-            // When a palette color is clicked
+            // -- Color palette interaction ---
+            // Allows the player to select a color to apply to nodes
             document.querySelectorAll('.colour-option').forEach(option => {
                 option.addEventListener('click', () => {
 
-                    // Remove highlight from all
+                    // Remove highlight from all options
                     document.querySelectorAll('.colour-option').forEach(o => o.classList.remove('selected'));
 
-                    // Highlight selected
+                    // Highlight selected option
                     option.classList.add('selected');
 
                     // Store selected color
@@ -122,7 +143,8 @@ function loadLevel(level) {
                 });
             });
 
-// When a node is clicked, apply the selected color
+            // --- Node Colouring ---
+            // Applies the selected color to the clicked node
             blankCy.on('tap', 'node', function (evt) {
                 const node = evt.target;
 
@@ -132,12 +154,14 @@ function loadLevel(level) {
                 }
             });
 
+            // ---- Check Answer Button ---
+            // Sends the player's graph to flask for isomorphism checking
             document.getElementById('check-answer-btn').onclick = () => {
 
                 // Extract the user's graph from cytoscape
                 const userGraph = blankCy.elements().map(el => el.json());
 
-                // send to flask
+                // send to backend for validation
                 fetch('/check_answer', {
                     method: 'POST',
                     headers: {
@@ -156,8 +180,10 @@ function loadLevel(level) {
                             feedback.textContent = "Correct";
                             feedback.style.color = "green";
 
+                            // --- Final level completed - show Game Over screen ---
                             // If this was the final level, show Game Over screen
                             if (currentLevel === 3) {
+
                                 // Hide the game UI
                                 document.getElementById('target-graph').style.display = "none";
                                 document.getElementById('blank-graph').style.display = "none";
@@ -175,13 +201,14 @@ function loadLevel(level) {
                             // Enable next level button
                             document.getElementById('next-level-btn').disabled = false;
 
-                            // Store mapping
+                            // Store mapping for modal display
                             lastMapping = data.mapping;
 
-                            // Show the Show Mapping button
+                            // Reveal mapping button
                             document.getElementById('show-mapping-btn').style.display = "inline-block";
 
                         } else {
+                            // Incorrect attempt
                             feedback.textContent = "Incorrect - try again.";
                             feedback.style.color = "red";
 
@@ -194,5 +221,6 @@ function loadLevel(level) {
         });
 }
 
-// Load level 1 on page load
+// --- Initialise Game ---
+// Load level 1 when the page first loads
 loadLevel(currentLevel);
