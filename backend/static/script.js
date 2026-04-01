@@ -17,7 +17,21 @@ document.getElementById('show-mapping-btn').addEventListener('click', () => {
     for (const [target, user] of Object.entries(lastMapping)) {
         text += `${target} → ${user}\n`;
     }
-    alert(text);
+    document.getElementById('mapping-text').textContent = text;
+    document.getElementById('mapping-modal').style.display = "block";
+});
+
+// Close modal
+document.getElementById('close-modal').addEventListener('click', () => {
+    document.getElementById('mapping-modal').style.display = "none";
+});
+
+// Close when clicking outside the modal box
+window.addEventListener('click', (event) => {
+    const modal = document.getElementById('mapping-modal');
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
 });
 
 // Load level function
