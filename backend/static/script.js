@@ -1,5 +1,8 @@
 let currentLevel = 1;
 let lastMapping = null;
+document.getElementById('restart-btn').addEventListener('click', () => {
+    window.location.reload();
+});
 // Next level button handler
 document.getElementById('next-level-btn').addEventListener('click', () => {
     currentLevel++;
@@ -152,6 +155,22 @@ function loadLevel(level) {
                         if (data.correct) {
                             feedback.textContent = "Correct";
                             feedback.style.color = "green";
+
+                            // If this was the final level, show Game Over screen
+                            if (currentLevel === 3) {
+                                // Hide the game UI
+                                document.getElementById('target-graph').style.display = "none";
+                                document.getElementById('blank-graph').style.display = "none";
+                                document.getElementById('colour-palette').style.display = "none"
+                                document.querySelector('.button-row').style.display = "none";
+                                document.getElementById('feedback').style.display = "none";
+
+                                // Show Game Over screen
+                                document.getElementById('game-over').style.display = "block";
+
+                                // Stop here so it doesn't show next level button
+                                return
+                            }
 
                             // Enable next level button
                             document.getElementById('next-level-btn').disabled = false;

@@ -106,3 +106,27 @@
     cursor: pointer;
 }
 
+.game-over-container {
+    width: 60%;
+    margin: 100px auto;
+    text-align: center;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+.restart-btn  {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border: none;
+    background: #45789D;
+    Color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.restart-btn:hover {
+    background: #1D3557;
+}
+
