@@ -1,6 +1,5 @@
 import itertools
 
-
 def parse_graph(cy_elements):
     nodes = {}
     adjacency = {}
