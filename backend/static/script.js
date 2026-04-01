@@ -187,7 +187,7 @@ function loadLevel(level) {
                                 // Hide the game UI
                                 document.getElementById('target-graph').style.display = "none";
                                 document.getElementById('blank-graph').style.display = "none";
-                                document.getElementById('colour-palette').style.display = "none"
+                                document.getElementById('colour-palette').style.display = "none";
                                 document.querySelector('.button-row').style.display = "none";
                                 document.getElementById('feedback').style.display = "none";
 
