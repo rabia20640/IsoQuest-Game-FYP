@@ -3,41 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>IsoQuest</title>
-
+    <!--
+    Stylesheet
+    Loads the main CSS file that defines the layout, palette, modal styling and
+    overall visual design of IsoQuest
+     -->
     <link rel="stylesheet" href="/static/styles.css">
 </head>
+
 <body>
+<!--
+Game Title
+Displayed at the top of the interface for clarity and branding
+-->
 <h1>IsoQuest</h1>
 
+<!--
+Target Graph (left)
+Shows the fully colored reference graph for the current level. This graph is
+not interactive
+-->
 <div id="target-graph"></div>
+
+<!--
+Blank Graph (right)
+The player interacts with this graph to recreate the structure and coloring of the
+target graph
+-->
 <div id="blank-graph"></div>
 
+<!--
+Color Palette
+Allows the player to select a color to apply to nodes in the blank graph. Each color-option
+div represents a selectable swatch
+-->
 <div id="colour-palette">
     <p>Select a color:</p>
+
+    <!-- Color swatches (each with a data color attribute) -->
     <div class="colour-option" data-colour="#E63946" style="background:#E63946;"></div>
     <div class="colour-option" data-colour="#457B9D" style="background:#457B9D;"></div>
     <div class="colour-option" data-colour="#2A9D8F" style="background:#2A9D8F;"></div>
     <div class="colour-option" data-colour="#FFD700" style="background:#FFD700;"></div>
     <div class="colour-option" data-colour="#0000FF" style="background:#0000FF;"></div>
+
+    <!-- White swatch with border for visibility -->
     <div class="colour-option" data-colour="#ffffff" style="background:#ffffff; border:1px solid #000;"></div>
 </div>
 
+<!--
+Action Buttons
+- Check Answer: Submits the player's graph to the backend
+- Next Level: Unlocked only after a correct solution
+- Show Mapping: Reveals the isomorphism mapping (hidden by default)
+-->
 <div class="button-row">
     <button id="check-answer-btn">Check Answer</button>
     <button id="next-level-btn" disabled>Next level</button>
     <button id="show-mapping-btn" style="display:none;">Show Mapping</button>
 </div>
 
+<!--
+ Feedback Area
+ Displays correctness messages (eg., "Correct", "Incorrect")
+ -->
 <p id="feedback"></p>
 
+<!--
+Mapping Modal
+A pop-up window that displays the node-to-node mapping returned by the backend
+when the player solves a level
+-->
 <div id="mapping-modal" class="modal">
     <div class="modal-content">
         <span id="close-modal" class="close">&times;</span>
         <h2>Isomorphism Mapping</h2>
+
+        <!--
+        Mapping text is inserted dynamically by script.js
+        -->
         <pre id="mapping-text"></pre>
     </div>
 </div>
 
+<!--
+Game Over Screen
+Displayed only after the final level is completed. Replaces the game interface with
+a summary and restart option
+-->
 <div id="game-over" style="display:none;" class="game-over-container">
     <h1>Congratulations!</h1>
     <p>You have completed all levels of IsoQuest.</p>
@@ -48,8 +101,12 @@
     <button id="restart-btn" class="restart-btn">Play Again</button>
 </div>
 
-
+<!--
+Scripts
+- cytoscape.js: graph rendering library
+- script.js: main client-side logic for IsoQuest
 <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
 <script src="/static/script.js"></script>
+
 </body>
 </html>

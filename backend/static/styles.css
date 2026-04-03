@@ -110,7 +110,7 @@ Used to show the isomorphism mapping in a centered popup
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5); /* Dimmed background overlay */
+    background: rgba(0, 0, 0, 0.5); /* Dimmed background overlay */
 }
 
 .modal-content {
@@ -119,7 +119,7 @@ Used to show the isomorphism mapping in a centered popup
     padding: 20px;
     width: 350px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     font-family: Arial, sans-serif;
 }
 
@@ -140,11 +140,11 @@ Displayed after completing the final level
     background: #ffffff;
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Restart button styling */
-.restart-btn  {
+.restart-btn {
     padding: 12px 25px;
     font-size: 1.1rem;
     border: none;
