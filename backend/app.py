@@ -12,7 +12,7 @@ from utils import graphs_match
 import json
 import os
 
-# Flask Application Setup
+# Flask Application Set Up
 # The template folder points to the frontend directory where index.html lives
 app = Flask(__name__, template_folder="../frontend")
 
