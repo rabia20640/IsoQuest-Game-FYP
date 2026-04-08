@@ -87,7 +87,7 @@ function loadLevel(level) {
                         selector: 'node',
                         style: {
                             'background-color': 'data(colour)', // Node colour from JSON
-                            'label': 'data(id)' // Display node ID
+                            'label': ''
                         }
                     },
                     {
@@ -98,7 +98,7 @@ function loadLevel(level) {
                         }
                     }
                 ],
-                layout: {name: 'preset'}
+                layout: {name: 'preset'} // Target graph stays fixed
             });
 
             // -- Blank graph (right side) --
@@ -113,7 +113,7 @@ function loadLevel(level) {
                             'background-color': '#ffffff',
                             'border-width': 2,
                             'border-color': '#000',
-                            'label': 'data(id)'
+                            'label': ''
                         }
                     },
                     {
@@ -124,7 +124,7 @@ function loadLevel(level) {
                         }
                     }
                 ],
-                layout: {name: 'preset'}
+                layout: {name: 'random'} // Randomised layout for challenge
             });
 
             // -- Color palette interaction ---
