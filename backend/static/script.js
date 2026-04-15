@@ -86,7 +86,8 @@ function loadLevel(level) {
                     {
                         selector: 'node',
                         style: {
-                            'background-color': 'data(colour)', // Node colour from JSON
+                            // Node colour from JSON
+                            'background-color': 'data(colour)',
                             'label': ''
                         }
                     },
@@ -98,7 +99,8 @@ function loadLevel(level) {
                         }
                     }
                 ],
-                layout: {name: 'preset'} // Target graph stays fixed
+                // Target graph stays fixed
+                layout: {name: 'preset'}
             });
 
             // -- Blank graph (right side) --
@@ -124,7 +126,8 @@ function loadLevel(level) {
                         }
                     }
                 ],
-                layout: {name: 'random'} // Randomised layout for challenge
+                // Randomised layout for challenge
+                layout: {name: 'random'}
             });
 
             // -- Color palette interaction ---
