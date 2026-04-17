@@ -96,6 +96,12 @@
           "source": "f",
           "target": "a"
         }
+      },
+      {
+        "data": {
+          "source": "c",
+          "target": "f"
+        }
       }
     ]
   },
@@ -189,6 +195,12 @@
         "data": {
           "source": "f",
           "target": "a"
+        }
+      },
+      {
+        "data": {
+          "source": "c",
+          "target": "f"
         }
       }
     ]

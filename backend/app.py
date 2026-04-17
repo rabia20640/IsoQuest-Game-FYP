@@ -65,6 +65,7 @@ def check_answer():
         return jsonify({"correct": True, "mapping": mapping})
     else:
         return jsonify({"correct": False})
+
     # Application Entry Point
 
 
