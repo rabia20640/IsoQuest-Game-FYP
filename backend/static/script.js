@@ -6,9 +6,40 @@
 let currentLevel = 1;
 let lastMapping = null;
 
+// Hint Mode (tooltip)
+let hintEnabled = false
+
+function enableHintMode(blankCy) {
+    hintEnabled = true;
+
+    blankCy.style().update();
+}
+
+function disableHintMode(blankCy) {
+    hintEnabled = false;
+
+    blankCy.style().update();
+
+    // Hide tooltip
+    document.getElementById('hint-tooltip').style.display = "none";
+}
+
+function toggleHintMode(blankCy) {
+    if (hintEnabled) {
+        disableHintMode(blankCy);
+    } else {
+        enableHintMode(blankCy);
+    }
+}
+
 // Restart button: reloads the entire game state
 document.getElementById('restart-btn').addEventListener('click', () => {
     window.location.reload();
+});
+
+// Hint button
+document.getElementById('hint-btn').addEventListener('click', () => {
+    toggleHintMode(window.currentBlankCy);
 });
 
 // --- Next Level Button ---
@@ -103,6 +134,16 @@ function loadLevel(level) {
                 layout: {name: 'preset'}
             });
 
+            // Build color lookup for Hint mode
+            const targetColours = {};
+            levelData.targetGraph.elements.forEach(el => {
+                if (el.data && el.data.colour) {
+                    targetColours[el.data.id] = el.data.colour;
+                }
+            });
+            window.targetColours = targetColours;
+
+
             // -- Blank graph (right side) --
             // This graph is the player's workspace for constructing the isomorphic graph
             const blankCy = cytoscape({
@@ -124,11 +165,12 @@ function loadLevel(level) {
                             'width': 2,
                             'line-color': '#ccc'
                         }
-                    }
+                    },
                 ],
                 // Randomised layout for challenge
                 layout: {name: 'random'}
             });
+            window.currentBlankCy = blankCy;
 
             // -- Color palette interaction ---
             // Allows the player to select a color to apply to nodes
@@ -150,80 +192,110 @@ function loadLevel(level) {
             // Applies the selected color to the clicked node
             blankCy.on('tap', 'node', function (evt) {
                 const node = evt.target;
+                const id = node.id();
 
+                // If Hint Mode is on, show tooltip
+                if (hintEnabled) {
+                    const correctColour = targetColours[id];
+
+                    if (correctColour) {
+                        const tooltip = document.getElementById('hint-tooltip');
+
+                        // Convert hex to readable color name
+                        const colourNames = {
+                            "#E63946": "red",
+                            "#0000FF": "blue",
+                            "#2A9D8F": "teal",
+                            "#FFD700": "yellow"
+                        };
+                        const readable = colourNames[correctColour] || correctColour;
+                        tooltip.textContent = `This should be ${readable}`;
+
+                        // Position tooltip near the node
+                        const pos = node.renderedPosition();
+                        const rect = document.getElementById('blank-graph').getBoundingClientRect();
+
+                        tooltip.style.left = (rect.left + pos.x + 10) + "px";
+                        tooltip.style.top = (rect.top + pos.y - 10) + "px";
+                        tooltip.style.display = "block";
+                    }
+                    // Do not apply selectedColour
+                    return;
+                }
+                // Normal colouring node
                 if (selectedColour) {
                     node.style('background-color', selectedColour);
                     node.data('colour', selectedColour);
                 }
             });
 
-            // ---- Check Answer Button ---
-            // Sends the player's graph to flask for isomorphism checking
-            document.getElementById('check-answer-btn').onclick = () => {
+                // ---- Check Answer Button ---
+                // Sends the player's graph to flask for isomorphism checking
+                document.getElementById('check-answer-btn').onclick = () => {
 
-                // Extract the user's graph from cytoscape
-                const userGraph = blankCy.elements().map(el => el.json());
+                    // Extract the user's graph from cytoscape
+                    const userGraph = blankCy.elements().map(el => el.json());
 
-                // send to backend for validation
-                fetch('/check_answer', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        userGraph: userGraph,
-                        level: currentLevel
+                    // send to backend for validation
+                    fetch('/check_answer', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            userGraph: userGraph,
+                            level: currentLevel
+                        })
                     })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        const feedback = document.getElementById('feedback');
+                        .then(response => response.json())
+                        .then(data => {
+                            const feedback = document.getElementById('feedback');
 
-                        if (data.correct) {
-                            feedback.textContent = "Correct";
-                            feedback.style.color = "green";
+                            if (data.correct) {
+                                feedback.textContent = "Correct";
+                                feedback.style.color = "green";
 
-                            // --- Final level completed - show Game Over screen ---
-                            // If this was the final level, show Game Over screen
-                            if (currentLevel === 3) {
+                                // --- Final level completed - show Game Over screen ---
+                                // If this was the final level, show Game Over screen
+                                if (currentLevel === 3) {
 
-                                // Hide the game UI
-                                document.getElementById('target-graph').style.display = "none";
-                                document.getElementById('blank-graph').style.display = "none";
-                                document.getElementById('colour-palette').style.display = "none";
-                                document.querySelector('.button-row').style.display = "none";
-                                document.getElementById('feedback').style.display = "none";
+                                    // Hide the game UI
+                                    document.getElementById('target-graph').style.display = "none";
+                                    document.getElementById('blank-graph').style.display = "none";
+                                    document.getElementById('colour-palette').style.display = "none";
+                                    document.querySelector('.button-row').style.display = "none";
+                                    document.getElementById('feedback').style.display = "none";
 
-                                // Show Game Over screen
-                                document.getElementById('game-over').style.display = "block";
+                                    // Show Game Over screen
+                                    document.getElementById('game-over').style.display = "block";
 
-                                // Stop here so it doesn't show next level button
-                                return
+                                    // Stop here so it doesn't show next level button
+                                    return
+                                }
+
+                                // Enable next level button
+                                document.getElementById('next-level-btn').disabled = false;
+
+                                // Store mapping for modal display
+                                lastMapping = data.mapping;
+
+                                // Reveal mapping button
+                                document.getElementById('show-mapping-btn').style.display = "inline-block";
+
+                            } else {
+                                // Incorrect attempt
+                                feedback.textContent = "Incorrect - try again.";
+                                feedback.style.color = "red";
+
+                                // Hide mapping button if previously shown
+                                document.getElementById('show-mapping-btn').style.display = "none";
                             }
-
-                            // Enable next level button
-                            document.getElementById('next-level-btn').disabled = false;
-
-                            // Store mapping for modal display
-                            lastMapping = data.mapping;
-
-                            // Reveal mapping button
-                            document.getElementById('show-mapping-btn').style.display = "inline-block";
-
-                        } else {
-                            // Incorrect attempt
-                            feedback.textContent = "Incorrect - try again.";
-                            feedback.style.color = "red";
-
-                            // Hide mapping button if previously shown
-                            document.getElementById('show-mapping-btn').style.display = "none";
-                        }
-                    })
-                    .catch(err => console.error('Error checking answer:', err));
-            };
-        });
-}
+                        })
+                        .catch(err => console.error('Error checking answer:', err));
+                };
+            });
+        }
 
 // --- Initialise Game ---
 // Load level 1 when the page first loads
-loadLevel(currentLevel);
+    loadLevel(currentLevel);

@@ -158,3 +158,31 @@ Displayed after completing the final level
     background: #1D3557;
 }
 
+/* Hint Button */
+#hint-btn {
+    padding: 12px 25px;
+    font-size: 18px;
+    background: #45789D;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Hover Effect */
+#hint-btn:hover {
+    background: #1D3557;
+}
+
+#hint-tooltip {
+    position: absolute;
+    background: #333;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: none;
+    pointer-events: none;
+    z-index: 9999;
+}

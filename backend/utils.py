@@ -13,42 +13,32 @@ graph.
 """
 
 
-# Graph Parsing
-def parse_graph(cy_elements):
-    """
-    Converts Cytoscape.js elements into two python structures:
-    nodes: {node_id: colour}
-    adjacency: {node_id: set(neighbour_ids) }
-    The function performs two passes:
-    1. Extract nodes and their colors
-    2. Extract edges and build adjacency lists
-
-    Args:
-        cy_elements (list): Raw cytoscape elements from JSON or user input.
-    Returns:
-        (dict, dict: nodes, adjacency
-    """
+def parse_graph(elements):
     nodes = {}
     adjacency = {}
 
-    # First pass: collect nodes and colors
-    for el in cy_elements:
-        if el["data"].get("id") and not el["data"].get("source"):
-            node_id = el["data"]["id"]
-            colour = el["data"].get("colour", "#ffffff")  # default white
+    # First pass: nodes
+    for el in elements:
+        node_id = el.get("id")
+        source = el.get("source")
+        target = el.get("target")
+
+        # It's a node if it has an id but no source/target
+        if node_id and source is None and target is None:
+            colour = el.get("colour", "#ffffff")
             nodes[node_id] = colour
             adjacency[node_id] = set()
 
-    # Second pass: collect edges
-    for el in cy_elements:
-        if el["data"].get("source"):
-            s = el["data"]["source"]
-            t = el["data"]["target"]
-            adjacency[s].add(t)
-            adjacency[t].add(s)
+    # Second pass: edges
+    for el in elements:
+        source = el.get("source")
+        target = el.get("target")
+
+        if source and target:
+            adjacency[source].add(target)
+            adjacency[target].add(source)
 
     return nodes, adjacency
-
 
 # Graph Isomorphism Checker
 def graphs_match(target, user):

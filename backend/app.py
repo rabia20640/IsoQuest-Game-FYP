@@ -30,6 +30,18 @@ def home():
 def game():
     return render_template("index.html")
 
+def normalise(elements):
+    cleaned = []
+    for el in elements:
+        data = el["data"]
+        cleaned.append({
+            "id": data.get("id"),
+            "colour": data.get("colour"),
+            "source": data.get("source"),
+            "target": data.get("target")
+        })
+    return cleaned
+
 
 """
 Answer Checking Route 
@@ -51,6 +63,9 @@ def check_answer():
         level_data = json.load(f)
         # Extract only the elements (nodes + edges) for comparison
     target_graph = level_data["targetGraph"]["elements"]
+
+    user_graph = normalise(user_graph)
+    target_graph = normalise(target_graph)
 
     """
     Perform isomorphism checking
