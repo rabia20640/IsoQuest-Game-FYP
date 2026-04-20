@@ -13,6 +13,7 @@ graph.
 """
 
 
+# Graph parser
 def parse_graph(elements):
     nodes = {}
     adjacency = {}
@@ -39,6 +40,7 @@ def parse_graph(elements):
             adjacency[target].add(source)
 
     return nodes, adjacency
+
 
 # Graph Isomorphism Checker
 def graphs_match(target, user):

@@ -226,76 +226,76 @@ function loadLevel(level) {
                 if (selectedColour) {
                     node.style('background-color', selectedColour);
                     node.data('colour', selectedColour);
-                }
+                }Tcd
             });
 
-                // ---- Check Answer Button ---
-                // Sends the player's graph to flask for isomorphism checking
-                document.getElementById('check-answer-btn').onclick = () => {
+            // ---- Check Answer Button ---
+            // Sends the player's graph to flask for isomorphism checking
+            document.getElementById('check-answer-btn').onclick = () => {
 
-                    // Extract the user's graph from cytoscape
-                    const userGraph = blankCy.elements().map(el => el.json());
+                // Extract the user's graph from cytoscape
+                const userGraph = blankCy.elements().map(el => el.json());
 
-                    // send to backend for validation
-                    fetch('/check_answer', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            userGraph: userGraph,
-                            level: currentLevel
-                        })
+                // send to backend for validation
+                fetch('/check_answer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userGraph: userGraph,
+                        level: currentLevel
                     })
-                        .then(response => response.json())
-                        .then(data => {
-                            const feedback = document.getElementById('feedback');
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const feedback = document.getElementById('feedback');
 
-                            if (data.correct) {
-                                feedback.textContent = "Correct";
-                                feedback.style.color = "green";
+                        if (data.correct) {
+                            feedback.textContent = "Correct";
+                            feedback.style.color = "green";
 
-                                // --- Final level completed - show Game Over screen ---
-                                // If this was the final level, show Game Over screen
-                                if (currentLevel === 3) {
+                            // --- Final level completed - show Game Over screen ---
+                            // If this was the final level, show Game Over screen
+                            if (currentLevel === 3) {
 
-                                    // Hide the game UI
-                                    document.getElementById('target-graph').style.display = "none";
-                                    document.getElementById('blank-graph').style.display = "none";
-                                    document.getElementById('colour-palette').style.display = "none";
-                                    document.querySelector('.button-row').style.display = "none";
-                                    document.getElementById('feedback').style.display = "none";
+                                // Hide the game UI
+                                document.getElementById('target-graph').style.display = "none";
+                                document.getElementById('blank-graph').style.display = "none";
+                                document.getElementById('colour-palette').style.display = "none";
+                                document.querySelector('.button-row').style.display = "none";
+                                document.getElementById('feedback').style.display = "none";
 
-                                    // Show Game Over screen
-                                    document.getElementById('game-over').style.display = "block";
+                                // Show Game Over screen
+                                document.getElementById('game-over').style.display = "block";
 
-                                    // Stop here so it doesn't show next level button
-                                    return
-                                }
-
-                                // Enable next level button
-                                document.getElementById('next-level-btn').disabled = false;
-
-                                // Store mapping for modal display
-                                lastMapping = data.mapping;
-
-                                // Reveal mapping button
-                                document.getElementById('show-mapping-btn').style.display = "inline-block";
-
-                            } else {
-                                // Incorrect attempt
-                                feedback.textContent = "Incorrect - try again.";
-                                feedback.style.color = "red";
-
-                                // Hide mapping button if previously shown
-                                document.getElementById('show-mapping-btn').style.display = "none";
+                                // Stop here so it doesn't show next level button
+                                return
                             }
-                        })
-                        .catch(err => console.error('Error checking answer:', err));
-                };
-            });
-        }
+
+                            // Enable next level button
+                            document.getElementById('next-level-btn').disabled = false;
+
+                            // Store mapping for modal display
+                            lastMapping = data.mapping;
+
+                            // Reveal mapping button
+                            document.getElementById('show-mapping-btn').style.display = "inline-block";
+
+                        } else {
+                            // Incorrect attempt
+                            feedback.textContent = "Incorrect - try again.";
+                            feedback.style.color = "red";
+
+                            // Hide mapping button if previously shown
+                            document.getElementById('show-mapping-btn').style.display = "none";
+                        }
+                    })
+                    .catch(err => console.error('Error checking answer:', err));
+            };
+        });
+}
 
 // --- Initialise Game ---
 // Load level 1 when the page first loads
-    loadLevel(currentLevel);
+loadLevel(currentLevel);
